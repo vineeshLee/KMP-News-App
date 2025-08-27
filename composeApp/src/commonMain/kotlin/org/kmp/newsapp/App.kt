@@ -17,33 +17,18 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import kmp_news_app.composeapp.generated.resources.Res
+import kmp_news_app.composeapp.generated.resources.app_name
 import kmp_news_app.composeapp.generated.resources.compose_multiplatform
+import org.jetbrains.compose.resources.Resource
+import org.jetbrains.compose.resources.stringResource
+import org.kmp.newsapp.theme.NewsAppTheme
+import org.kmp.newsapp.ui.MainScreen
+import org.kmp.newsapp.util.getType
 
 @Composable
 @Preview
 fun App() {
-    MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .safeContentPadding()
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
-                }
-            }
-        }
-    }
+    //NewsAppTheme(true) {
+        MainScreen()
+    //}
 }
