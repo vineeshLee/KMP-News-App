@@ -1,5 +1,9 @@
 package org.kmp.newsapp.util
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
 import kmp_news_app.composeapp.generated.resources.Res
 import kmp_news_app.composeapp.generated.resources.bookmark
 import kmp_news_app.composeapp.generated.resources.headlines
@@ -82,3 +86,11 @@ val articles: List<Article> = listOf(
         articleId = "4"
     )
 )
+
+val FadeIn = fadeIn(animationSpec = tween(220, delayMillis = 90)) +
+        scaleIn(
+            initialScale = 0.92f,
+            animationSpec = tween(220, delayMillis = 90)
+        )
+
+val FadeOut = fadeOut(animationSpec = tween(90))
