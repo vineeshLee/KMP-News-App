@@ -16,7 +16,7 @@ import org.kmp.newsapp.navigation.MainNavGraph
 import org.kmp.newsapp.navigation.NewsBottomNavigation
 import org.kmp.newsapp.navigation.SettingRoute
 import org.kmp.newsapp.util.bottomBarList
-
+//dfad7bcf78054ff6b41d531a2f83838a
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(rootNavController: NavHostController) {
@@ -28,7 +28,7 @@ fun MainScreen(rootNavController: NavHostController) {
         mutableStateOf(currentBackStackEntry?.destination?.route)
     }
 
-    val currentBottom by rememberSaveable(currentBackStackEntry) {
+    val currentBottom by remember(currentBackStackEntry) {
         derivedStateOf { currentBackStackEntry?.destination?.route }
     }
 
@@ -46,14 +46,13 @@ fun MainScreen(rootNavController: NavHostController) {
 
     DisposableEffect(Unit) {
         preRoute = currentBottom
-        print("prev state:${currentBottom}")
         onDispose {
-
+            print("prev state:${currentBottom}")
         }
     }
 
-    LaunchedEffect(Unit){
-        if (preRoute!=null){
+    LaunchedEffect(Unit) {
+        if (preRoute != null) {
             homeNavController.navigate(preRoute!!) {
                 // Pop up to the start destination of the graph to
                 // avoid building up a large stack of destinations
