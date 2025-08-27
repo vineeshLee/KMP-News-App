@@ -21,6 +21,7 @@ import kmp_news_app.composeapp.generated.resources.app_name
 import kmp_news_app.composeapp.generated.resources.compose_multiplatform
 import org.jetbrains.compose.resources.Resource
 import org.jetbrains.compose.resources.stringResource
+import org.kmp.newsapp.navigation.RootNavGraph
 import org.kmp.newsapp.theme.NewsAppTheme
 import org.kmp.newsapp.ui.MainScreen
 import org.kmp.newsapp.util.getType
@@ -28,7 +29,7 @@ import org.kmp.newsapp.util.getType
 @Composable
 @Preview
 fun App() {
-    //NewsAppTheme(true) {
-        MainScreen()
-    //}
+    NewsAppTheme(true) {
+        RootNavGraph()
+    }
 }

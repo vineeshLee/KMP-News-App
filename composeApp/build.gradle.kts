@@ -47,6 +47,9 @@ kotlin {
 
             implementation(compose.material3)
             implementation(compose.materialIconsExtended)
+
+            // Navigation
+            implementation(libs.navigation.compose)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

@@ -1,46 +1,93 @@
 package org.kmp.newsapp.ui
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.text.font.FontWeight
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import kmp_news_app.composeapp.generated.resources.Res
 import kmp_news_app.composeapp.generated.resources.setting
 import org.jetbrains.compose.resources.stringResource
+import org.kmp.newsapp.navigation.MainNavGraph
 import org.kmp.newsapp.navigation.NewsBottomNavigation
-import org.kmp.newsapp.theme.shimmerColors
+import org.kmp.newsapp.navigation.SettingRoute
 import org.kmp.newsapp.util.bottomBarList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen() {
-    var currentBottom by remember { mutableStateOf(bottomBarList[0].route) }
+fun MainScreen(rootNavController: NavHostController) {
+    val homeNavController = rememberNavController()
+
+    val currentBackStackEntry by homeNavController.currentBackStackEntryAsState()
+
+    var preRoute by rememberSaveable {
+        mutableStateOf(currentBackStackEntry?.destination?.route)
+    }
+
+    val currentBottom by rememberSaveable(currentBackStackEntry) {
+        derivedStateOf { currentBackStackEntry?.destination?.route }
+    }
+
+    val topTitle by remember(currentBottom) {
+        derivedStateOf {
+            if (currentBottom != null) {
+                bottomBarList[bottomBarList.indexOfFirst {
+                    it.route == currentBottom
+                }].title
+            } else {
+                bottomBarList[0].title
+            }
+        }
+    }
+
+    DisposableEffect(Unit) {
+        preRoute = currentBottom
+        print("prev state:${currentBottom}")
+        onDispose {
+
+        }
+    }
+
+    LaunchedEffect(Unit){
+        if (preRoute!=null){
+            homeNavController.navigate(preRoute!!) {
+                // Pop up to the start destination of the graph to
+                // avoid building up a large stack of destinations
+                // on the back stack as users select items
+                homeNavController.graph.startDestinationRoute?.let {
+                    // Pop up to the start destination, clearing the back stack
+                    popUpTo(it) {
+                        // Save the state of popped destinations
+                        saveState = true
+                    }
+                }
+                // Configure navigation to avoid multiple instances of the same destination
+                launchSingleTop = true
+                // Restore state when re-selecting a previously selected item
+                restoreState = true
+            }
+        }
+    }
+
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text = "HeadLines",
+                        text = stringResource(topTitle),
                         style = MaterialTheme.typography.headlineLarge,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onBackground
                     )
                 },
                 actions = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = {
+                        rootNavController.navigate(SettingRoute.Setting.route)
+                    }) {
                         Icon(
                             imageVector = Icons.Default.Settings,
                             contentDescription = stringResource(resource = Res.string.setting)
@@ -54,17 +101,30 @@ fun MainScreen() {
                 items = bottomBarList,
                 currentRoute = currentBottom,
                 onItemClick = { currentBottomClickItem ->
-                    currentBottom = currentBottomClickItem.route
+                    homeNavController.navigate(currentBottomClickItem.route) {
+                        // Pop up to the start destination of the graph to
+                        // avoid building up a large stack of destinations
+                        // on the back stack as users select items
+                        homeNavController.graph.startDestinationRoute?.let {
+                            // Pop up to the start destination, clearing the back stack
+                            popUpTo(it) {
+                                // Save the state of popped destinations
+                                saveState = true
+                            }
+                        }
+                        // Configure navigation to avoid multiple instances of the same destination
+                        launchSingleTop = true
+                        // Restore state when re-selecting a previously selected item
+                        restoreState = true
+                    }
                 }
             )
         }
     ) { paddingValues ->
-        Column(
-            modifier = Modifier
-                .padding(paddingValues)
-                .fillMaxSize()
-        ) {
-            Text(text = "Hello world")
-        }
+        MainNavGraph(
+            homeNavController = homeNavController,
+            rootNavController = rootNavController,
+            paddingValues = paddingValues
+        )
     }
 }

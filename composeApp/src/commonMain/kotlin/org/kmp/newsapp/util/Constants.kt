@@ -8,6 +8,7 @@ import kmp_news_app.composeapp.generated.resources.ic_home
 import kmp_news_app.composeapp.generated.resources.ic_search
 import kmp_news_app.composeapp.generated.resources.search
 import org.kmp.newsapp.navigation.BottomNavigationItem
+import org.kmp.newsapp.navigation.MainNavigation
 
 enum class Type{
     MOBILE,
@@ -18,16 +19,16 @@ val bottomBarList=listOf<BottomNavigationItem>(
     BottomNavigationItem(
         icon = Res.drawable.ic_home,
         title = Res.string.headlines,
-        route = "HeadLine"
+        route = MainNavigation.HeadLine.route
     ),
     BottomNavigationItem(
         icon = Res.drawable.ic_search,
         title = Res.string.search,
-        route = "Search"
+        route = MainNavigation.Search.route
     ),
     BottomNavigationItem(
         icon = Res.drawable.ic_bookmark,
         title = Res.string.bookmark,
-        route = "BookMark"
+        route = MainNavigation.BookMark.route
     )
 )
