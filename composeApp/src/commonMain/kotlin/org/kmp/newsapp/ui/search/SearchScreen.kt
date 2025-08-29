@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import kmp_news_app.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 import org.kmp.newsapp.theme.mediumPadding
@@ -17,7 +18,7 @@ import org.kmp.newsapp.ui.common.EmptyContent
 import org.kmp.newsapp.ui.common.ShimmerEffect
 
 @Composable
-fun SearchScreen() {
+fun SearchScreen(navController: NavController) {
     var searchQuery by rememberSaveable() {
         mutableStateOf("")
     }
@@ -63,7 +64,7 @@ fun SearchScreen() {
                         }
                     )
                 } else {
-                    ArticleListScreen(data)
+                    ArticleListScreen(data,navController)
                 }
             },
             onError = {

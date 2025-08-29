@@ -6,11 +6,15 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import kmp_news_app.composeapp.generated.resources.Res
 import kmp_news_app.composeapp.generated.resources.bookmark
+import kmp_news_app.composeapp.generated.resources.dark_mode
 import kmp_news_app.composeapp.generated.resources.headlines
 import kmp_news_app.composeapp.generated.resources.ic_bookmark
 import kmp_news_app.composeapp.generated.resources.ic_home
 import kmp_news_app.composeapp.generated.resources.ic_search
+import kmp_news_app.composeapp.generated.resources.light_mode
 import kmp_news_app.composeapp.generated.resources.search
+import kmp_news_app.composeapp.generated.resources.system_default
+import org.jetbrains.compose.resources.StringResource
 import org.kmp.newsapp.data.model.Article
 import org.kmp.newsapp.data.model.Source
 import org.kmp.newsapp.navigation.BottomNavigationItem
@@ -94,3 +98,9 @@ val FadeIn = fadeIn(animationSpec = tween(220, delayMillis = 90)) +
         )
 
 val FadeOut = fadeOut(animationSpec = tween(90))
+
+enum class Theme(val title: StringResource) {
+    SYSTEM_DEFAULT(Res.string.system_default),
+    LIGHT_MODE(Res.string.light_mode),
+    DARK_MODE(Res.string.dark_mode)
+}

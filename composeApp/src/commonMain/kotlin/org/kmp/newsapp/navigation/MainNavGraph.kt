@@ -27,7 +27,7 @@ fun MainNavGraph(
         composable(
             route = MainNavigation.HeadLine.route
         ) {
-            HeadLineScreen()
+            HeadLineScreen(rootNavController)
         }
         composable(
             route = MainNavigation.BookMark.route
@@ -37,7 +37,7 @@ fun MainNavGraph(
         composable(
             route = MainNavigation.Search.route
         ) {
-            SearchScreen()
+            SearchScreen(rootNavController)
         }
     }
 }

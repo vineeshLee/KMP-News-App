@@ -13,3 +13,7 @@ sealed class MainNavigation(var route: String){
 sealed class SettingRoute(var route: String){
     object Setting: SettingRoute("Setting")
 }
+
+sealed class NewsRouteScreen(var route: String){
+    object NewsDetails: NewsRouteScreen("NewsDetails")
+}

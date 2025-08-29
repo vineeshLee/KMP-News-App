@@ -43,7 +43,7 @@ fun ArticleItem(
 ) {
     Card(
         onClick = onClick,
-        shape = RoundedCornerShape(10),
+        shape = RoundedCornerShape(5),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
     ) {
         Row(

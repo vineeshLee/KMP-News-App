@@ -5,7 +5,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.kmp.newsapp.ui.MainScreen
+import org.kmp.newsapp.ui.detail.NewsDetails
 import org.kmp.newsapp.ui.setting.SettingScreen
+import org.kmp.newsapp.util.articles
 
 @Composable
 fun RootNavGraph() {
@@ -24,7 +26,16 @@ fun RootNavGraph() {
         composable(
             route = SettingRoute.Setting.route
         ) {
-            SettingScreen()
+            SettingScreen(navController)
+        }
+
+        composable(
+            route = NewsRouteScreen.NewsDetails.route
+        ) {
+            NewsDetails(
+                navController = navController,
+                currentArticle = articles[0]
+            )
         }
     }
 }

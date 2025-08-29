@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import io.ktor.client.utils.EmptyContent
 import kmp_news_app.composeapp.generated.resources.Res
 import kmp_news_app.composeapp.generated.resources.ic_document
@@ -15,7 +16,7 @@ import org.kmp.newsapp.ui.common.EmptyContent
 import org.kmp.newsapp.ui.common.ShimmerEffect
 
 @Composable
-fun HeadLineScreen() {
+fun HeadLineScreen(navController: NavController) {
     val viewModel = viewModel {
         HeadLineViewModel()
     }
@@ -36,7 +37,7 @@ fun HeadLineScreen() {
                     }
                 )
             }else{
-                ArticleListScreen(data)
+                ArticleListScreen(data, navController =navController )
             }
         },
         onError = {
