@@ -50,7 +50,7 @@ val articles: List<Article> = listOf(
         author = "The author",
         title = "This is the main news title headline. This is the main news title headline.",
         description = "This is the main news description. This is the main news description. This is the main news description",
-        url = "",
+        url = "https://thrivenews.co/gavin-newsoms-california-dream-decline-and-political-gamesmanship/",
         urlToImage = "https://www.marketscreener.com/images/reuters/2024-03-05T144855Z_1_LYNXNPEK240IP_RTROPTP_3_GERMANY-TESLA-FIRE.JPG",
         publishedAt = Random(100).nextInt().toString(),
         content = "What is the content?",
@@ -61,7 +61,7 @@ val articles: List<Article> = listOf(
         author = "The author",
         title = "This is the main news title headline. This is the main news title headline.",
         description = "This is the main news description. This is the main news description. This is the main news description",
-        url = "",
+        url = "https://thrivenews.co/gavin-newsoms-california-dream-decline-and-political-gamesmanship/",
         urlToImage = "https://www.marketscreener.com/images/reuters/2024-03-05T144855Z_1_LYNXNPEK240IP_RTROPTP_3_GERMANY-TESLA-FIRE.JPG",
         publishedAt = Random(100).nextInt().toString(),
         content = "What is the content?",
@@ -72,7 +72,7 @@ val articles: List<Article> = listOf(
         author = "The author",
         title = "This is the main news title headline. This is the main news title headline.",
         description = "This is the main news description. This is the main news description. This is the main news description",
-        url = "",
+        url = "https://thrivenews.co/gavin-newsoms-california-dream-decline-and-political-gamesmanship/",
         urlToImage = "https://www.marketscreener.com/images/reuters/2024-03-05T144855Z_1_LYNXNPEK240IP_RTROPTP_3_GERMANY-TESLA-FIRE.JPG",
         publishedAt = Random(100).nextInt().toString(),
         content = "What is the content?",
@@ -83,7 +83,7 @@ val articles: List<Article> = listOf(
         author = "The author",
         title = "This is the main news title headline. This is the main news title headline.",
         description = "This is the main news description. This is the main news description. This is the main news description",
-        url = "",
+        url = "https://thrivenews.co/gavin-newsoms-california-dream-decline-and-political-gamesmanship/",
         urlToImage = "https://www.marketscreener.com/images/reuters/2024-03-05T144855Z_1_LYNXNPEK240IP_RTROPTP_3_GERMANY-TESLA-FIRE.JPG",
         publishedAt = Random(100).nextInt().toString(),
         content = "What is the content?",
@@ -104,3 +104,5 @@ enum class Theme(val title: StringResource) {
     LIGHT_MODE(Res.string.light_mode),
     DARK_MODE(Res.string.dark_mode)
 }
+
+const val API_KEY = ""

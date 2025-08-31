@@ -35,6 +35,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import coil3.compose.AsyncImagePainter
@@ -51,6 +52,7 @@ import org.kmp.newsapp.theme.detailiImageSize
 import org.kmp.newsapp.theme.mediumPadding
 import org.kmp.newsapp.theme.xLargePadding
 import org.kmp.newsapp.ui.common.PulseAnimation
+import org.kmp.newsapp.util.shareLink
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,6 +60,8 @@ fun NewsDetails(
     navController: NavController,
     currentArticle: Article
 ) {
+    var urlHandler= LocalUriHandler.current
+
     Scaffold(topBar = {
         TopAppBar(
             navigationIcon = {
@@ -80,7 +84,7 @@ fun NewsDetails(
             },
             actions = {
                 IconButton(onClick = {
-                    //shareLink(currentArticle.url)
+                    shareLink(currentArticle.url)
                 }) {
                     Icon(
                         imageVector = Icons.Filled.Share,
@@ -88,7 +92,7 @@ fun NewsDetails(
                     )
                 }
                 IconButton(onClick = {
-                    //url.openUri(currentArticle.url)
+                    urlHandler.openUri(currentArticle.url)
                 }) {
                     Icon(
                         painter = painterResource(Res.drawable.ic_web),
@@ -98,13 +102,13 @@ fun NewsDetails(
                 IconButton(onClick = {
                     //articleDetailViewModel.bookmarkArticle(currentArticle)
                 }) {
-                    /*Icon(
+                    Icon(
+                        //if (articleDetailViewModel.isBookmarked)
                         painter = painterResource(
-                            if (articleDetailViewModel.isBookmarked) Res.drawable.ic_bookmark
-                            else Res.drawable.ic_bookmark
+                             Res.drawable.ic_bookmark
                         ),
                         contentDescription = null,
-                    )*/
+                    )
                 }
             },
         )
