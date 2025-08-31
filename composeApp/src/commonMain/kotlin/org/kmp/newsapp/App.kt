@@ -1,35 +1,25 @@
 package org.kmp.newsapp
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import org.jetbrains.compose.resources.painterResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-import kmp_news_app.composeapp.generated.resources.Res
-import kmp_news_app.composeapp.generated.resources.app_name
-import kmp_news_app.composeapp.generated.resources.compose_multiplatform
-import org.jetbrains.compose.resources.Resource
-import org.jetbrains.compose.resources.stringResource
 import org.kmp.newsapp.navigation.RootNavGraph
 import org.kmp.newsapp.theme.NewsAppTheme
-import org.kmp.newsapp.ui.MainScreen
-import org.kmp.newsapp.util.getType
+import org.kmp.newsapp.ui.setting.SettingsViewModel
+import org.kmp.newsapp.util.AppPreferences
+import org.kmp.newsapp.util.dataStorePreference
 
 @Composable
 @Preview
 fun App() {
-    NewsAppTheme(true) {
-        RootNavGraph()
+    val appPreference = remember {
+        AppPreferences(dataStorePreference())
+    }
+    val settingViewModel= viewModel { SettingsViewModel(appPreference) }
+    val currentThem by settingViewModel.currentTheme.collectAsState()
+
+    NewsAppTheme(currentThem) {
+        RootNavGraph(settingViewModel)
     }
 }

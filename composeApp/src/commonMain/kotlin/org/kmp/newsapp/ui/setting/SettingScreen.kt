@@ -20,7 +20,9 @@ import org.kmp.newsapp.util.Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingScreen(navController: NavController) {
+fun SettingScreen(navController: NavController,
+                  settingsViewModel: SettingsViewModel) {
+
     var showDeleteBookMarkDialog by remember {
         mutableStateOf(false)
     }
@@ -28,12 +30,14 @@ fun SettingScreen(navController: NavController) {
     var showThemeSelection by remember {
         mutableStateOf(false)
     }
+    val currentTheme=settingsViewModel.currentTheme.collectAsState().value
 
     when {
         showThemeSelection -> {
             ChangeThemeDialog(
-                currentTheme = Theme.LIGHT_MODE.name,
+                currentTheme =currentTheme ?: Theme.DARK_MODE.name,
                 onThemeChange = {
+                    settingsViewModel.changeThemeMode(it.name)
                     showThemeSelection = false
                 },
                 onDismissRequest = {
@@ -104,7 +108,7 @@ fun SettingScreen(navController: NavController) {
 @Preview
 @Composable
 fun Setting() {
-    NewsAppTheme(false) {
+   /* NewsAppTheme(false) {
         //SettingScreen()
-    }
+    }*/
 }

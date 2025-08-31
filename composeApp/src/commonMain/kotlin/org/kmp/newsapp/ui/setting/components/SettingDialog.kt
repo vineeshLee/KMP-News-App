@@ -80,9 +80,9 @@ fun DeleteDialog(
 @Preview
 @Composable
 fun DeleteDialogPreview() {
-    NewsAppTheme(false) {
-        /* DeleteDialog()*/
-    }
+    /*NewsAppTheme(false) {
+        *//* DeleteDialog()*//*
+    }*/
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

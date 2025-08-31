@@ -7,10 +7,11 @@ import androidx.navigation.compose.rememberNavController
 import org.kmp.newsapp.ui.MainScreen
 import org.kmp.newsapp.ui.detail.NewsDetails
 import org.kmp.newsapp.ui.setting.SettingScreen
+import org.kmp.newsapp.ui.setting.SettingsViewModel
 import org.kmp.newsapp.util.articles
 
 @Composable
-fun RootNavGraph() {
+fun RootNavGraph(settingViewModel: SettingsViewModel) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -26,7 +27,7 @@ fun RootNavGraph() {
         composable(
             route = SettingRoute.Setting.route
         ) {
-            SettingScreen(navController)
+            SettingScreen(navController,settingViewModel)
         }
 
         composable(

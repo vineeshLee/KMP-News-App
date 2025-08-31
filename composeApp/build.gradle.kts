@@ -65,6 +65,9 @@ kotlin {
             implementation(libs.coil.compose)
             implementation(libs.coil.mp)
             implementation(libs.coil.network.ktor3)
+
+            //dataStore
+            implementation(libs.androidx.data.store.core)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

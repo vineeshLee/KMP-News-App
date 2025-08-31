@@ -21,6 +21,7 @@ import org.kmp.newsapp.navigation.BottomNavigationItem
 import org.kmp.newsapp.navigation.MainNavigation
 import kotlin.random.Random
 
+const val preferenceFileName="NewsApp.preferences_pb"
 enum class Type{
     MOBILE,
     DESKTOP

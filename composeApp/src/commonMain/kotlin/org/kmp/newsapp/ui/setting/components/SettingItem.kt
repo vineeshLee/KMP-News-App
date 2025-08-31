@@ -56,10 +56,10 @@ fun SettingItem(
 @Preview
 @Composable
 fun SettingItemPreview() {
-    NewsAppTheme(false) {
-       /* SettingItem(
+    /*NewsAppTheme(false) {
+       *//* SettingItem(
             onclick = {},
             painter = Painter()
-        )*/
-    }
+        )*//*
+    }*/
 }

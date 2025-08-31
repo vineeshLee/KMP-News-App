@@ -149,10 +149,10 @@ fun ArticleItem(
 @Preview()
 @Composable()
 fun HeadLineScree() {
-    NewsAppTheme {
+    /*NewsAppTheme {
         articles.forEach { article ->
             ArticleItem(article, onClick = {
             })
         }
-    }
+    }*/
 }
