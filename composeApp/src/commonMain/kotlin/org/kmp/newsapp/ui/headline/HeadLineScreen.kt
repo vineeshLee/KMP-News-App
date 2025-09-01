@@ -11,6 +11,7 @@ import kmp_news_app.composeapp.generated.resources.ic_document
 import kmp_news_app.composeapp.generated.resources.ic_no_internet
 import kmp_news_app.composeapp.generated.resources.no_news
 import org.jetbrains.compose.resources.stringResource
+import org.kmp.newsapp.data.repository.NewsRepository
 import org.kmp.newsapp.ui.common.ArticleListScreen
 import org.kmp.newsapp.ui.common.EmptyContent
 import org.kmp.newsapp.ui.common.ShimmerEffect
@@ -18,7 +19,7 @@ import org.kmp.newsapp.ui.common.ShimmerEffect
 @Composable
 fun HeadLineScreen(navController: NavController) {
     val viewModel = viewModel {
-        HeadLineViewModel()
+        HeadLineViewModel(NewsRepository())
     }
     val uiState by viewModel.newsState.collectAsState()
     uiState.DisplayResult(

@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavController
+import kotlinx.serialization.json.Json
 import org.kmp.newsapp.data.model.Article
 import org.kmp.newsapp.navigation.NewsRouteScreen
 import org.kmp.newsapp.theme.mediumPadding
@@ -32,10 +33,14 @@ fun ArticleListScreen(
         horizontalArrangement = Arrangement.spacedBy(mediumPadding),
         contentPadding = PaddingValues(mediumPadding),
     ) {
-        items(articles, key = {
+        items(articleList, key = {
             it.publishedAt + getRandomId()
         }) {
             ArticleItem(it, onClick = {
+                val articleString= Json.encodeToString(it)
+                navController.currentBackStackEntry?.savedStateHandle?.apply {
+                    set("article",articleString)
+                }
                 navController.navigate(NewsRouteScreen.NewsDetails.route)
             })
         }

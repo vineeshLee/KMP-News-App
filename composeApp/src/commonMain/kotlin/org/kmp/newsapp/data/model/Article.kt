@@ -13,8 +13,6 @@ data class Article(
     val description: String?,
     @SerialName("publishedAt")
     val publishedAt: String,
-    @SerialName("articleId")
-    val articleId: String,
     @SerialName("source")
     val source: Source,
     @SerialName("title")

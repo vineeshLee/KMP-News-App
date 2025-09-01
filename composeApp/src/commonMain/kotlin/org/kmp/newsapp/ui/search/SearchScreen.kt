@@ -11,6 +11,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import kmp_news_app.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
+import org.kmp.newsapp.data.repository.NewsRepository
 import org.kmp.newsapp.theme.mediumPadding
 import org.kmp.newsapp.theme.xxSmallPadding
 import org.kmp.newsapp.ui.common.ArticleListScreen
@@ -23,7 +24,7 @@ fun SearchScreen(navController: NavController) {
         mutableStateOf("")
     }
     val viewModel = viewModel {
-        SearchViewModel()
+        SearchViewModel(NewsRepository())
     }
     val uiState by viewModel.newsState.collectAsState()
 
@@ -35,7 +36,7 @@ fun SearchScreen(navController: NavController) {
             },
             onSearch = {
                 if (it.trim().isNotEmpty()) {
-                    viewModel.performSearch()
+                    viewModel.performSearch(it)
                 }
             }
         )

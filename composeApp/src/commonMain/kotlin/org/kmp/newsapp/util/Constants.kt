@@ -22,6 +22,7 @@ import org.kmp.newsapp.navigation.MainNavigation
 import kotlin.random.Random
 
 const val preferenceFileName="NewsApp.preferences_pb"
+const val BASE_URL = "https://newsapi.org/v2/"
 enum class Type{
     MOBILE,
     DESKTOP
@@ -54,8 +55,7 @@ val articles: List<Article> = listOf(
         url = "https://thrivenews.co/gavin-newsoms-california-dream-decline-and-political-gamesmanship/",
         urlToImage = "https://www.marketscreener.com/images/reuters/2024-03-05T144855Z_1_LYNXNPEK240IP_RTROPTP_3_GERMANY-TESLA-FIRE.JPG",
         publishedAt = Random(100).nextInt().toString(),
-        content = "What is the content?",
-        articleId = "1"
+        content = "What is the content?"
     ),
     Article(
         source = Source("dawdwa", "My news"),
@@ -65,8 +65,7 @@ val articles: List<Article> = listOf(
         url = "https://thrivenews.co/gavin-newsoms-california-dream-decline-and-political-gamesmanship/",
         urlToImage = "https://www.marketscreener.com/images/reuters/2024-03-05T144855Z_1_LYNXNPEK240IP_RTROPTP_3_GERMANY-TESLA-FIRE.JPG",
         publishedAt = Random(100).nextInt().toString(),
-        content = "What is the content?",
-        articleId = "2"
+        content = "What is the content?"
     ),
     Article(
         source = Source("dwakjyk", "My news"),
@@ -76,8 +75,7 @@ val articles: List<Article> = listOf(
         url = "https://thrivenews.co/gavin-newsoms-california-dream-decline-and-political-gamesmanship/",
         urlToImage = "https://www.marketscreener.com/images/reuters/2024-03-05T144855Z_1_LYNXNPEK240IP_RTROPTP_3_GERMANY-TESLA-FIRE.JPG",
         publishedAt = Random(100).nextInt().toString(),
-        content = "What is the content?",
-        articleId = "3"
+        content = "What is the content?"
     ),
     Article(
         source = Source("dwserfewa", "My news"),
@@ -87,8 +85,7 @@ val articles: List<Article> = listOf(
         url = "https://thrivenews.co/gavin-newsoms-california-dream-decline-and-political-gamesmanship/",
         urlToImage = "https://www.marketscreener.com/images/reuters/2024-03-05T144855Z_1_LYNXNPEK240IP_RTROPTP_3_GERMANY-TESLA-FIRE.JPG",
         publishedAt = Random(100).nextInt().toString(),
-        content = "What is the content?",
-        articleId = "4"
+        content = "What is the content?"
     )
 )
 

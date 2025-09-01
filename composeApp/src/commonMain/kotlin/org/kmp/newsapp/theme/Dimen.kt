@@ -14,5 +14,6 @@ val xxLargePadding = 32.dp
 val xxxLargePadding = 48.dp
 
 val cardMinSize = 360.dp
-val imageSize = 120.dp
-val detailiImageSize = 400.dp
+val imageSize = 130.dp
+val detailiImageSize = 650.dp
+val iconSize = 24.dp
