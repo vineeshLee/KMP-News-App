@@ -41,6 +41,7 @@ kotlin {
     jvm()
     
     sourceSets {
+
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -50,6 +51,7 @@ kotlin {
         iosMain.dependencies {
             // Ktor
             implementation(libs.ktor.client.darwin)
+
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -84,11 +86,19 @@ kotlin {
             implementation(libs.ktor.logging)
             implementation(libs.ktor.negotiation)
             implementation(libs.kotlinx.serialization.json)
+
             // Kermit  for logging
             implementation(libs.kermit)
+
             // Room + Sqlite
             implementation(libs.androidx.room.runtime)
             implementation(libs.sqlite.bundled)
+
+            // Koin
+            api(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.composeVM)
+
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

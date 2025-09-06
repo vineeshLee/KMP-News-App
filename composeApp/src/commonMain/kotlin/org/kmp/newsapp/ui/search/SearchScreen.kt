@@ -17,15 +17,15 @@ import org.kmp.newsapp.theme.xxSmallPadding
 import org.kmp.newsapp.ui.common.ArticleListScreen
 import org.kmp.newsapp.ui.common.EmptyContent
 import org.kmp.newsapp.ui.common.ShimmerEffect
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun SearchScreen(navController: NavController) {
     var searchQuery by rememberSaveable() {
         mutableStateOf("")
     }
-    val viewModel = viewModel {
-        SearchViewModel(NewsRepository())
-    }
+    val viewModel = koinViewModel<SearchViewModel>()
+
     val uiState by viewModel.newsState.collectAsState()
 
     Column(verticalArrangement = Arrangement.spacedBy(mediumPadding)) {

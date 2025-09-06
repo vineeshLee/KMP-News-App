@@ -12,7 +12,6 @@ import kmp_news_app.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import org.kmp.newsapp.theme.NewsAppTheme
 import org.kmp.newsapp.ui.setting.components.ChangeThemeDialog
 import org.kmp.newsapp.ui.setting.components.DeleteDialog
 import org.kmp.newsapp.ui.setting.components.SettingItem
@@ -20,8 +19,10 @@ import org.kmp.newsapp.util.Theme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingScreen(navController: NavController,
-                  settingsViewModel: SettingsViewModel) {
+fun SettingScreen(
+    navController: NavController,
+    settingsViewModel: SettingsViewModel
+) {
 
     var showDeleteBookMarkDialog by remember {
         mutableStateOf(false)
@@ -30,18 +31,18 @@ fun SettingScreen(navController: NavController,
     var showThemeSelection by remember {
         mutableStateOf(false)
     }
-    val currentTheme=settingsViewModel.currentTheme.collectAsState().value
+    val currentTheme = settingsViewModel.currentTheme.collectAsState().value
 
     when {
         showThemeSelection -> {
             ChangeThemeDialog(
-                currentTheme =currentTheme ?: Theme.DARK_MODE.name,
+                currentTheme = currentTheme ?: Theme.DARK_MODE.name,
                 onThemeChange = {
                     settingsViewModel.changeThemeMode(it.name)
                     showThemeSelection = false
                 },
                 onDismissRequest = {
-                showThemeSelection = false
+                    showThemeSelection = false
                 }
 
             )
@@ -50,6 +51,7 @@ fun SettingScreen(navController: NavController,
         showDeleteBookMarkDialog -> {
             DeleteDialog(
                 onDelete = {
+                    settingsViewModel.deleteAllBookMarks()
                     showDeleteBookMarkDialog = false
                 },
                 onDismiss = {
@@ -108,7 +110,7 @@ fun SettingScreen(navController: NavController,
 @Preview
 @Composable
 fun Setting() {
-   /* NewsAppTheme(false) {
-        //SettingScreen()
-    }*/
+    /* NewsAppTheme(false) {
+         //SettingScreen()
+     }*/
 }

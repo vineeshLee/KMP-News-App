@@ -104,4 +104,14 @@ enum class Theme(val title: StringResource) {
     DARK_MODE(Res.string.dark_mode)
 }
 
-const val API_KEY = ""
+val categoryList = arrayListOf(
+    "Business",
+    "Entertainment",
+    "General",
+    "Health",
+    "Science",
+    "Sports",
+    "Technology"
+)
+
+const val API_KEY = "dfad7bcf78054ff6b41d531a2f83838a"

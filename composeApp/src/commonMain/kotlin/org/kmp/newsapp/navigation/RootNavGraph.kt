@@ -13,7 +13,9 @@ import org.kmp.newsapp.ui.setting.SettingsViewModel
 import org.kmp.newsapp.util.articles
 
 @Composable
-fun RootNavGraph(settingViewModel: SettingsViewModel) {
+fun RootNavGraph(
+     settingsViewModel: SettingsViewModel
+) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
@@ -29,7 +31,7 @@ fun RootNavGraph(settingViewModel: SettingsViewModel) {
         composable(
             route = SettingRoute.Setting.route
         ) {
-            SettingScreen(navController,settingViewModel)
+            SettingScreen(navController,settingsViewModel)
         }
 
         composable(

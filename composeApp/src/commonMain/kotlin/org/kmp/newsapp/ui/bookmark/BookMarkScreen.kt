@@ -34,6 +34,7 @@ import org.kmp.newsapp.ui.common.ShimmerEffect
 import org.kmp.newsapp.util.bottomBarList
 import org.kmp.newsapp.util.getDatabaseBuilder
 import org.kmp.newsapp.util.getRoomDataBase
+import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,14 +42,7 @@ fun BookMarkScreen(
     paddingValues: PaddingValues,
     rootNavController: NavHostController
 ) {
-    val bookmarkViewModel = viewModel {
-        BookMarkViewModel(
-            localNewsRepository = LocalNewsRepository(
-                getRoomDataBase(getDatabaseBuilder()).newsDao()
-            )
-        )
-    }
-
+    val bookmarkViewModel = koinViewModel<BookMarkViewModel>()
 
     val uiState by bookmarkViewModel.bookmarkNewsStateFlow.collectAsState()
     val originDirection = LocalLayoutDirection.current

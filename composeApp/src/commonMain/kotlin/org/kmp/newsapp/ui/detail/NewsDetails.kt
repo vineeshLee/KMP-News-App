@@ -34,6 +34,7 @@ import org.kmp.newsapp.ui.common.PulseAnimation
 import org.kmp.newsapp.util.getDatabaseBuilder
 import org.kmp.newsapp.util.getRoomDataBase
 import org.kmp.newsapp.util.shareLink
+import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,12 +43,10 @@ fun NewsDetails(
     currentArticle: Article
 ) {
     var urlHandler = LocalUriHandler.current
-    val viewModel = viewModel {
-        NewsDetailsViewModel(
-            localNewsRepository = LocalNewsRepository(
-                getRoomDataBase(getDatabaseBuilder()).newsDao()
-            )
-        )
+    val viewModel = koinViewModel<NewsDetailsViewModel>()
+
+    LaunchedEffect(Unit){
+        viewModel.checkIsBookMarked(currentArticle)
     }
 
     Box {
@@ -219,9 +218,8 @@ fun NewsDetails(
                         viewModel.bookmarkArticle(currentArticle)
                     }) {
                         Icon(
-                            //if (viewModel.isBookmarked)
-                            painter = painterResource(
-                                Res.drawable.ic_bookmark
+                            painter = painterResource(if (viewModel.isBookMarked)
+                                Res.drawable.ic_bookmarked else Res.drawable.ic_bookmark
                             ),
                             contentDescription = null,
                             tint = Color.White

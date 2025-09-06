@@ -6,6 +6,9 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.sqlite.driver.bundled.BundledSQLiteDriver
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import org.kmp.newsapp.data.database.NewsDatabase
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
@@ -60,6 +63,6 @@ actual fun getDatabaseBuilder(): RoomDatabase.Builder<NewsDatabase> {
     val dbFilePath = NSHomeDirectory() + "/${DB_NAME}" // Assuming DB_NAME is defined elsewhere
     return Room.databaseBuilder<NewsDatabase>(
         name = dbFilePath,
-        factory = { NewsDatabase::class.instantiateImpl() } // Use the generated instantiateImpl()
+        factory = { NewsDatabase::class.instantiateImpl() }
     )
 }

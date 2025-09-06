@@ -6,9 +6,11 @@ import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.WindowState
 import androidx.compose.ui.window.application
 import coil3.size.Dimension
+import org.kmp.newsapp.di.initKoin
 import java.awt.Window
 
 fun main() = application {
+    initKoin ()
     Window(
         onCloseRequest = ::exitApplication,
         title = "KMP-News-App",

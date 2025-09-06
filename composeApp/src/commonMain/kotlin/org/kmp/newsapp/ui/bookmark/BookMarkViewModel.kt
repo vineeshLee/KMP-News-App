@@ -1,5 +1,6 @@
 package org.kmp.newsapp.ui.bookmark
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
