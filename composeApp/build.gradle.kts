@@ -9,9 +9,15 @@ plugins {
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.composeHotReload)
     alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.room)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
+    sourceSets.commonMain {
+        kotlin.srcDir("build/generated/ksp/metadata")
+    }
+
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
         compilerOptions {
@@ -27,6 +33,8 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
+            // Required when using NativeSQLiteDriver
+            linkerOpts.add("-lsqlite3")
         }
     }
     
@@ -78,6 +86,9 @@ kotlin {
             implementation(libs.kotlinx.serialization.json)
             // Kermit  for logging
             implementation(libs.kermit)
+            // Room + Sqlite
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.sqlite.bundled)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
@@ -87,6 +98,9 @@ kotlin {
             implementation(libs.kotlinx.coroutinesSwing)
             // ktor
             implementation(libs.ktor.client.okhttp)
+        }
+        dependencies {
+            ksp(libs.androidx.room.compiler)
         }
     }
 }
@@ -121,7 +135,9 @@ android {
 dependencies {
     debugImplementation(compose.uiTooling)
 }
-
+room {
+    schemaDirectory("$projectDir/schemas")
+}
 compose.desktop {
     application {
         mainClass = "org.kmp.newsapp.MainKt"

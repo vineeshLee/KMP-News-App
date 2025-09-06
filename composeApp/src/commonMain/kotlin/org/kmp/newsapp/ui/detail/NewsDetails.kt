@@ -1,22 +1,16 @@
 package org.kmp.newsapp.ui.detail
 
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowBackIos
-import androidx.compose.material.icons.automirrored.filled.ArrowLeft
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -25,24 +19,20 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import coil3.compose.AsyncImagePainter
 import coil3.compose.rememberAsyncImagePainter
-import coil3.request.ImageRequest
-import coil3.size.Size
 import kmp_news_app.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.kmp.newsapp.data.model.Article
-import org.kmp.newsapp.theme.NewsAppTheme
+import org.kmp.newsapp.data.repository.LocalNewsRepository
 import org.kmp.newsapp.theme.detailiImageSize
 import org.kmp.newsapp.theme.largePadding
 import org.kmp.newsapp.theme.mediumPadding
-import org.kmp.newsapp.theme.xLargePadding
 import org.kmp.newsapp.ui.common.PulseAnimation
-import org.kmp.newsapp.ui.common.TransparentBlackLinearGradientBox
-import org.kmp.newsapp.util.Theme
+import org.kmp.newsapp.util.getDatabaseBuilder
+import org.kmp.newsapp.util.getRoomDataBase
 import org.kmp.newsapp.util.shareLink
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,8 +42,15 @@ fun NewsDetails(
     currentArticle: Article
 ) {
     var urlHandler = LocalUriHandler.current
+    val viewModel = viewModel {
+        NewsDetailsViewModel(
+            localNewsRepository = LocalNewsRepository(
+                getRoomDataBase(getDatabaseBuilder()).newsDao()
+            )
+        )
+    }
 
-    Box{
+    Box {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -219,10 +216,10 @@ fun NewsDetails(
                         )
                     }
                     IconButton(onClick = {
-                        //articleDetailViewModel.bookmarkArticle(currentArticle)
+                        viewModel.bookmarkArticle(currentArticle)
                     }) {
                         Icon(
-                            //if (articleDetailViewModel.isBookmarked)
+                            //if (viewModel.isBookmarked)
                             painter = painterResource(
                                 Res.drawable.ic_bookmark
                             ),

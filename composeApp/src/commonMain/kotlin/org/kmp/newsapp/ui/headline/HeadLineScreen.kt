@@ -34,7 +34,7 @@ fun HeadLineScreen(navController: NavController) {
                     message = stringResource(Res.string.no_news),
                     icon = Res.drawable.ic_document,
                     onRetryClick = {
-                        //Todo retry
+                        viewModel.getHeadLines()
                     }
                 )
             }else{
@@ -46,8 +46,9 @@ fun HeadLineScreen(navController: NavController) {
                 message = it,
                 icon = Res.drawable.ic_no_internet,
                 onRetryClick = {
-                    //Todo retry
-                }
+                    viewModel.getHeadLines()
+                },
+                isOnRetryBtnVisible = true
             )
         }
     )

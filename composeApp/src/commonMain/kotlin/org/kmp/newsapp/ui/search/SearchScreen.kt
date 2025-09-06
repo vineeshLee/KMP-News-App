@@ -60,9 +60,7 @@ fun SearchScreen(navController: NavController) {
                     EmptyContent(
                         message = stringResource(Res.string.no_news),
                         icon = Res.drawable.ic_document,
-                        onRetryClick = {
-                            //Todo retry
-                        }
+                        onRetryClick = {}
                     )
                 } else {
                     ArticleListScreen(data,navController)
@@ -73,8 +71,9 @@ fun SearchScreen(navController: NavController) {
                     message = it,
                     icon = Res.drawable.ic_no_internet,
                     onRetryClick = {
-                        //Todo retry
-                    }
+                        viewModel.performSearch(searchQuery)
+                    },
+                    isOnRetryBtnVisible = true
                 )
             }
         )

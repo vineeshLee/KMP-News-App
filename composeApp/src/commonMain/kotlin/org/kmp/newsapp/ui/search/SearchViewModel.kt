@@ -35,7 +35,7 @@ class SearchViewModel(
                     _newsState.emit(Resource.Error(error.message))
                 }
             } catch (e: Exception) {
-                _newsState.emit(Resource.Error(e.message.toString()))
+                _newsState.emit(Resource.Error("Something went wrong"))
             }
         }
     }

@@ -32,7 +32,8 @@ fun MainNavGraph(
         composable(
             route = MainNavigation.BookMark.route
         ) {
-            BookMarkScreen()
+            BookMarkScreen(paddingValues,
+                rootNavController)
         }
         composable(
             route = MainNavigation.Search.route

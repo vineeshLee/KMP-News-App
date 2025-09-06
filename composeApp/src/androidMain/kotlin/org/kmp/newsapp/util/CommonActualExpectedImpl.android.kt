@@ -4,6 +4,10 @@ import android.app.Activity
 import android.content.Intent
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import io.ktor.util.reflect.instanceOf
+import org.kmp.newsapp.data.database.NewsDatabase
 import java.util.*
 
 actual fun getType(): Type {
@@ -36,4 +40,13 @@ actual fun dataStorePreference(): DataStore<Preferences> {
         producerPath = {
             activityProvider.invoke().filesDir.resolve(preferenceFileName).absolutePath
         })
+}
+
+actual fun getDatabaseBuilder(): RoomDatabase.Builder<NewsDatabase> {
+   val context=activityProvider.invoke()
+    val dbFile=context.getDatabasePath(DB_NAME)
+    return Room.databaseBuilder<NewsDatabase>(
+        context=context,
+        name=dbFile.absolutePath
+    )
 }

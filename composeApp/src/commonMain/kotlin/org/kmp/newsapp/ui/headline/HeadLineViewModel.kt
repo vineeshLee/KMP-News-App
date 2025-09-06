@@ -26,7 +26,7 @@ class HeadLineViewModel(
         getHeadLines()
     }
 
-    private fun getHeadLines() {
+    fun getHeadLines() {
         viewModelScope.launch(Dispatchers.IO) {
             _newsState.emit(Resource.Loading)
             try {
@@ -40,7 +40,7 @@ class HeadLineViewModel(
                 }
 
             } catch (e: Exception) {
-                _newsState.emit(Resource.Error(e.message.toString()))
+                _newsState.emit(Resource.Error("Something went wrong"))
             }
         }
     }

@@ -23,6 +23,7 @@ import kotlin.random.Random
 
 const val preferenceFileName="NewsApp.preferences_pb"
 const val BASE_URL = "https://newsapi.org/v2/"
+const val DB_NAME = "News_DB"
 enum class Type{
     MOBILE,
     DESKTOP

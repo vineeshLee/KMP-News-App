@@ -4,13 +4,18 @@ package org.kmp.newsapp.util
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import org.kmp.newsapp.data.database.NewsDatabase
 import platform.Foundation.NSDocumentDirectory
 import platform.Foundation.NSFileManager
+import platform.Foundation.NSHomeDirectory
 import platform.Foundation.NSURL
 import platform.Foundation.NSUUID
 import platform.Foundation.NSUserDomainMask
 import platform.UIKit.UIActivityViewController
 import platform.UIKit.UIApplication
+import data.database.instantiateImpl
 
 actual fun getType(): Type {
     return Type.MOBILE
@@ -48,5 +53,13 @@ actual fun dataStorePreference(): DataStore<Preferences> {
                 "Could not find Document directory."
             }.path + "/$preferenceFileName"
         }
+    )
+}
+
+actual fun getDatabaseBuilder(): RoomDatabase.Builder<NewsDatabase> {
+    val dbFilePath = NSHomeDirectory() + "/${DB_NAME}" // Assuming DB_NAME is defined elsewhere
+    return Room.databaseBuilder<NewsDatabase>(
+        name = dbFilePath,
+        factory = { NewsDatabase::class.instantiateImpl() } // Use the generated instantiateImpl()
     )
 }
