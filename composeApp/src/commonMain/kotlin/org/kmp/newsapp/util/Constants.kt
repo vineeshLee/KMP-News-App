@@ -71,4 +71,4 @@ val categoryList = arrayListOf(
     "Technology"
 )
 
-const val API_KEY = "dfad7bcf78054ff6b41d531a2f83838a"
+const val API_KEY = ""
