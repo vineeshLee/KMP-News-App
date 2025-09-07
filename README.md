@@ -1,16 +1,48 @@
-This is a Kotlin Multiplatform project targeting Android, iOS, Desktop (JVM).
+# News KMP App
 
-* [/composeApp](./composeApp/src) is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - [commonMain](./composeApp/src/commonMain/kotlin) is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    the [iosMain](./composeApp/src/iosMain/kotlin) folder would be the right place for such calls.
-    Similarly, if you want to edit the Desktop (JVM) specific part, the [jvmMain](./composeApp/src/jvmMain/kotlin)
-    folder is the appropriate location.
+This is a Kotlin Multiplatform (KMP) project for a News Application. It's built using Jetpack Compose for the UI and targets Android, iOS, and Desktop (JVM). It follows the MVVM architecture pattern.
 
-* [/iosApp](./iosApp/iosApp) contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform,
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+## Project Overview
 
+The application aims to provide a seamless news reading experience across multiple platforms using a shared codebase for business logic and UI components where possible.
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+## Features (based on dependencies)
+
+*   **Cross-Platform UI:** Uses Jetpack Compose for declarative UI development, shared across Android, iOS (via Compose Multiplatform), and Desktop.
+*   **Architecture:** Follows the **MVVM** (Model-View-ViewModel) architectural pattern.
+*   **Navigation:** Implements navigation within the app using `androidx.navigation:navigation-compose`.
+*   **Image Loading:** Uses **`Coil`** for efficient image loading from network sources.
+*   **Networking:** Leverages **`Ktor`** for making HTTP requests to fetch news data. It includes support for JSON serialization.
+*   **Data Persistence:**
+    *   Uses `Room` for local database storage on Android.
+    *   Employs Jetpack `DataStore` for storing key-value pairs or typed objects with protocol buffers.
+*   **Dependency Injection:** Utilizes **`Koin`** for managing dependencies across the application.
+*   **Logging:** Implements `Kermit` for multiplatform logging.
+*   **Reactive Programming:** Uses Kotlin Coroutines (including **`kotlinx-coroutines-swing`** for Desktop) for asynchronous operations.
+*   **Window Size Management:** Adapts UI based on screen size using `dev.chrisbanes.material3:material3-window-size-class-multiplatform`.
+*   **Modern Android Development:**
+    *   Uses AndroidX libraries like `Activity Compose`, `Lifecycle ViewModel Compose`, and `Core SplashScreen`.
+    *   Targets modern Android SDK versions.
+*   **Desktop Support:** Builds native desktop applications (DMG, MSI, Deb formats) using Compose for Desktop.
+*   **iOS Support:** Builds an iOS framework for integration into an iOS application.
+
+## Project Structure
+
+The project follows a standard Kotlin Multiplatform structure:
+
+*   `composeApp/src/commonMain`: Contains code shared across all platforms (Android, iOS, Desktop). This includes:
+    *   UI components (Composables)
+    *   ViewModel logic (implementing **MVVM**)
+    *   Networking logic (**`Ktor`**)
+    *   Data handling and repositories
+    *   Domain models
+    *   Navigation graph definitions
+*   `composeApp/src/androidMain`: Contains Android-specific code, configurations, and resources.
+*   `composeApp/src/iosMain`: Contains iOS-specific code and configurations.
+*   `composeApp/src/jvmMain`: Contains Desktop (JVM)-specific code and configurations, including usage of **`kotlinx-coroutines-swing`**.
+*   `build.gradle.kts`: The main Gradle build file for the KMP module, defining dependencies and multiplatform configurations.
+
+## Setup and Build
+
+1.  **Clone the repository:**
+    
