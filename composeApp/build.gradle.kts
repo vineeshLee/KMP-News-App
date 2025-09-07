@@ -47,6 +47,8 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             // Ktor
             implementation(libs.ktor.client.android)
+            // Splash API
+            implementation(libs.androidx.core.splashscreen)
         }
         iosMain.dependencies {
             // Ktor
@@ -98,6 +100,9 @@ kotlin {
             api(libs.koin.core)
             implementation(libs.koin.compose)
             implementation(libs.koin.composeVM)
+
+            // window-size
+            implementation(libs.screen.size)
 
         }
         commonTest.dependencies {

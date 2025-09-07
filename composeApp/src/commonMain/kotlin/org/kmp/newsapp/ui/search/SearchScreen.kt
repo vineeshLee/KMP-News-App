@@ -2,25 +2,38 @@ package org.kmp.newsapp.ui.search
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import kmp_news_app.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
-import org.kmp.newsapp.data.repository.NewsRepository
+import org.kmp.newsapp.navigation.Route
 import org.kmp.newsapp.theme.mediumPadding
 import org.kmp.newsapp.theme.xxSmallPadding
 import org.kmp.newsapp.ui.common.ArticleListScreen
 import org.kmp.newsapp.ui.common.EmptyContent
 import org.kmp.newsapp.ui.common.ShimmerEffect
+import org.kmp.newsapp.util.NavigationList
 import org.koin.compose.viewmodel.koinViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(navController: NavController) {
+fun SearchScreen(rootNavController: NavController, paddingValues: PaddingValues) {
     var searchQuery by rememberSaveable() {
         mutableStateOf("")
     }
@@ -28,7 +41,30 @@ fun SearchScreen(navController: NavController) {
 
     val uiState by viewModel.newsState.collectAsState()
 
-    Column(verticalArrangement = Arrangement.spacedBy(mediumPadding)) {
+    Column(
+        modifier = Modifier.fillMaxSize().padding(paddingValues),
+        verticalArrangement = Arrangement.spacedBy(mediumPadding)) {
+        TopAppBar(
+            title = {
+                Text(
+                    text = stringResource(NavigationList[1].title),
+                    style = MaterialTheme.typography.headlineLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+            },
+            actions = {
+                IconButton(onClick = {
+                    rootNavController.navigate(Route.SettingDetail)
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = stringResource(resource = Res.string.setting)
+                    )
+                }
+            }
+        )
+
         SearchBar(
             text = searchQuery,
             onValueChange = { changeValue ->
@@ -63,7 +99,7 @@ fun SearchScreen(navController: NavController) {
                         onRetryClick = {}
                     )
                 } else {
-                    ArticleListScreen(data,navController)
+                    ArticleListScreen(data,rootNavController)
                 }
             },
             onError = {

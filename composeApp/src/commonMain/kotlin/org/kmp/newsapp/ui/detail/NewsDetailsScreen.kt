@@ -19,26 +19,22 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil3.compose.rememberAsyncImagePainter
 import kmp_news_app.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import org.kmp.newsapp.data.model.Article
-import org.kmp.newsapp.data.repository.LocalNewsRepository
 import org.kmp.newsapp.theme.detailiImageSize
 import org.kmp.newsapp.theme.largePadding
 import org.kmp.newsapp.theme.mediumPadding
 import org.kmp.newsapp.ui.common.PulseAnimation
-import org.kmp.newsapp.util.getDatabaseBuilder
-import org.kmp.newsapp.util.getRoomDataBase
 import org.kmp.newsapp.util.shareLink
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewsDetails(
+fun NewsDetailsScreen(
     navController: NavController,
     currentArticle: Article
 ) {

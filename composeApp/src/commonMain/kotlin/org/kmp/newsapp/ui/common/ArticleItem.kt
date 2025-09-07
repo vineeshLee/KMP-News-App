@@ -29,13 +29,10 @@ import coil3.compose.rememberAsyncImagePainter
 import kmp_news_app.composeapp.generated.resources.Res
 import kmp_news_app.composeapp.generated.resources.ic_logo
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.kmp.newsapp.data.model.Article
-import org.kmp.newsapp.theme.NewsAppTheme
 import org.kmp.newsapp.theme.imageSize
 import org.kmp.newsapp.theme.xSmallPadding
 import org.kmp.newsapp.theme.xxSmallPadding
-import org.kmp.newsapp.util.articles
 
 @Composable
 fun ArticleItem(
@@ -44,8 +41,8 @@ fun ArticleItem(
 ) {
     Card(
         onClick = onClick,
-        shape = RoundedCornerShape(5),
-        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
+        shape = RoundedCornerShape(10),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer)
     ) {
         Row(
             horizontalArrangement = Arrangement.spacedBy(xSmallPadding)
@@ -56,65 +53,65 @@ fun ArticleItem(
                     .clip(RoundedCornerShape(10)),
                 contentAlignment = Alignment.Center
             ) {
-                 var imageLoadResult by remember {
-                     mutableStateOf<Result<Painter>?>(null)
-                 }
-                 val painter = rememberAsyncImagePainter(
-                     model = article.urlToImage,
-                     onSuccess = {
-                         imageLoadResult =
-                             if (it.painter.intrinsicSize.width > 1 && it.painter.intrinsicSize.height > 1) {
-                                 Result.success(it.painter)
-                             } else {
-                                 Result.failure(Exception("Invalid image size"))
-                             }
-                     },
-                     onError = {
-                         it.result.throwable.printStackTrace()
-                         imageLoadResult = Result.failure(it.result.throwable)
-                     }
-                 )
+                var imageLoadResult by remember {
+                    mutableStateOf<Result<Painter>?>(null)
+                }
+                val painter = rememberAsyncImagePainter(
+                    model = article.urlToImage,
+                    onSuccess = {
+                        imageLoadResult =
+                            if (it.painter.intrinsicSize.width > 1 && it.painter.intrinsicSize.height > 1) {
+                                Result.success(it.painter)
+                            } else {
+                                Result.failure(Exception("Invalid image size"))
+                            }
+                    },
+                    onError = {
+                        it.result.throwable.printStackTrace()
+                        imageLoadResult = Result.failure(it.result.throwable)
+                    }
+                )
 
-                 val painterState by painter.state.collectAsState()
-                 val transition by animateFloatAsState(
-                     targetValue = if (painterState is AsyncImagePainter.State.Success) {
-                         1f
-                     } else {
-                         0f
-                     },
-                     animationSpec = tween(durationMillis = 800)
-                 )
+                val painterState by painter.state.collectAsState()
+                val transition by animateFloatAsState(
+                    targetValue = if (painterState is AsyncImagePainter.State.Success) {
+                        1f
+                    } else {
+                        0f
+                    },
+                    animationSpec = tween(durationMillis = 800)
+                )
 
-                 when (val result = imageLoadResult) {
-                     null -> {
-                         PulseAnimation(
-                             modifier = Modifier.fillMaxSize()
-                         )
-                     }
+                when (val result = imageLoadResult) {
+                    null -> {
+                        PulseAnimation(
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
 
-                     else -> {
-                         Image(
-                             painter = if (result.isSuccess) painter else {
-                                 painterResource(Res.drawable.ic_logo)
-                             },
-                             contentDescription = article.title,
-                             contentScale = ContentScale.Crop,
-                             modifier = Modifier
-                                 .fillMaxSize()
-                                 .graphicsLayer {
-                                     if (result.isSuccess) {
-                                         rotationX = (1f - transition) * 30f
-                                         val scale = 0.8f + (0.2f * transition)
-                                         scaleX = scale
-                                         scaleY = scale
-                                     }
-                                 }
-                         )
-                     }
-                 }
+                    else -> {
+                        Image(
+                            painter = if (result.isSuccess) painter else {
+                                painterResource(Res.drawable.ic_logo)
+                            },
+                            contentDescription = article.title,
+                            contentScale = ContentScale.Crop,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .graphicsLayer {
+                                    if (result.isSuccess) {
+                                        rotationX = (1f - transition) * 30f
+                                        val scale = 0.8f + (0.2f * transition)
+                                        scaleX = scale
+                                        scaleY = scale
+                                    }
+                                }
+                        )
+                    }
+                }
             }
             Column(
-                modifier = Modifier.weight(1f).padding(xSmallPadding),
+                modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(xxSmallPadding)
             ) {
                 Text(
@@ -145,15 +142,4 @@ fun ArticleItem(
             }
         }
     }
-}
-
-@Preview()
-@Composable()
-fun HeadLineScree() {
-    /*NewsAppTheme {
-        articles.forEach { article ->
-            ArticleItem(article, onClick = {
-            })
-        }
-    }*/
 }

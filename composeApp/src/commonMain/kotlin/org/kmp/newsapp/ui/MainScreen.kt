@@ -1,129 +1,157 @@
 package org.kmp.newsapp.ui
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.*
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraph
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import kmp_news_app.composeapp.generated.resources.Res
-import kmp_news_app.composeapp.generated.resources.setting
-import org.jetbrains.compose.resources.stringResource
-import org.kmp.newsapp.navigation.MainNavGraph
+import org.kmp.newsapp.navigation.NavGraph
+import org.kmp.newsapp.navigation.NavigationItem
+import org.kmp.newsapp.navigation.NavigationSideBar
 import org.kmp.newsapp.navigation.NewsBottomNavigation
-import org.kmp.newsapp.navigation.SettingRoute
-import org.kmp.newsapp.util.bottomBarList
+import org.kmp.newsapp.ui.setting.SettingsViewModel
+import org.kmp.newsapp.util.NavigationList
+
 //dfad7bcf78054ff6b41d531a2f83838a
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
-fun MainScreen(rootNavController: NavHostController) {
-    val homeNavController = rememberNavController()
-
-    val currentBackStackEntry by homeNavController.currentBackStackEntryAsState()
-
-    var preRoute by rememberSaveable {
-        mutableStateOf(currentBackStackEntry?.destination?.route)
-    }
-
-    val currentBottom by remember(currentBackStackEntry) {
-        derivedStateOf { currentBackStackEntry?.destination?.route }
-    }
-
-    val topTitle by remember(currentBottom) {
+fun MainScreen(settingViewModel: SettingsViewModel) {
+    val windowSizeClass = calculateWindowSizeClass()
+    val isMediumExpandedWWSC by remember(windowSizeClass) {
         derivedStateOf {
-            if (currentBottom != null) {
-                bottomBarList[bottomBarList.indexOfFirst {
-                    it.route == currentBottom
-                }].title
-            } else {
-                bottomBarList[0].title
+            windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
+        }
+    }
+    val rootNavController = rememberNavController()
+    val navBackStackEntry by rootNavController.currentBackStackEntryAsState()
+    val currentRoute by remember(navBackStackEntry) {
+        derivedStateOf {
+            navBackStackEntry?.destination?.route
+        }
+    }
+    val navigationItem by remember {
+        derivedStateOf {
+            NavigationList.find {
+                it.route::class.qualifiedName == currentRoute
             }
         }
     }
-
-    DisposableEffect(Unit) {
-        preRoute = currentBottom
-        onDispose {
-            print("prev state:${currentBottom}")
+    val isMainScreenVisible by remember(isMediumExpandedWWSC) {
+        derivedStateOf {
+            navigationItem != null
         }
     }
-
-    LaunchedEffect(Unit) {
-        if (preRoute != null) {
-            homeNavController.navigate(preRoute!!) {
+    val isBottomBarVisible by remember(isMediumExpandedWWSC) {
+        derivedStateOf {
+            if (!isMediumExpandedWWSC) {
+                navigationItem != null
+            } else {
+                false
+            }
+        }
+    }
+    MainScaffold(
+        rootNavController = rootNavController,
+        settingViewModel = settingViewModel,
+        currentRoute = currentRoute,
+        isMediumExpandedWWSC = isMediumExpandedWWSC,
+        isBottomBarVisible = isBottomBarVisible,
+        isMainScreenVisible = isMainScreenVisible,
+        onItemClick = { currentNavigationItem ->
+            rootNavController.navigate(currentNavigationItem.route) {
                 // Pop up to the start destination of the graph to
                 // avoid building up a large stack of destinations
                 // on the back stack as users select items
-                homeNavController.graph.startDestinationRoute?.let {
+                rootNavController.graph.startDestinationRoute?.let { startDestinationRoute ->
                     // Pop up to the start destination, clearing the back stack
-                    popUpTo(it) {
+                    popUpTo(startDestinationRoute) {
                         // Save the state of popped destinations
                         saveState = true
                     }
                 }
+
                 // Configure navigation to avoid multiple instances of the same destination
                 launchSingleTop = true
+
                 // Restore state when re-selecting a previously selected item
                 restoreState = true
             }
-        }
-    }
+        })
+}
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(topTitle),
-                        style = MaterialTheme.typography.headlineLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onBackground
-                    )
-                },
-                actions = {
-                    IconButton(onClick = {
-                        rootNavController.navigate(SettingRoute.Setting.route)
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Settings,
-                            contentDescription = stringResource(resource = Res.string.setting)
-                        )
-                    }
-                }
+@Composable
+fun MainScaffold(
+    rootNavController: NavHostController,
+    settingViewModel: SettingsViewModel,
+    currentRoute: String?,
+    isMediumExpandedWWSC: Boolean,
+    isBottomBarVisible: Boolean,
+    isMainScreenVisible: Boolean,
+    onItemClick: (NavigationItem) -> Unit,
+) {
+    Row {
+        AnimatedVisibility(
+            modifier = Modifier.background(MaterialTheme.colorScheme.surface),
+            visible = isMediumExpandedWWSC && isMainScreenVisible,
+            enter = slideInHorizontally(
+                // Slide in from the left
+                initialOffsetX = { fullWidth -> -fullWidth }
+            ),
+            exit = slideOutHorizontally(
+                // Slide out to the right
+                targetOffsetX = { fullWidth -> -fullWidth }
             )
-        },
-        bottomBar = {
-            NewsBottomNavigation(
-                items = bottomBarList,
-                currentRoute = currentBottom,
-                onItemClick = { currentBottomClickItem ->
-                    homeNavController.navigate(currentBottomClickItem.route) {
-                        // Pop up to the start destination of the graph to
-                        // avoid building up a large stack of destinations
-                        // on the back stack as users select items
-                        homeNavController.graph.startDestinationRoute?.let {
-                            // Pop up to the start destination, clearing the back stack
-                            popUpTo(it) {
-                                // Save the state of popped destinations
-                                saveState = true
-                            }
-                        }
-                        // Configure navigation to avoid multiple instances of the same destination
-                        launchSingleTop = true
-                        // Restore state when re-selecting a previously selected item
-                        restoreState = true
-                    }
+        ) {
+            NavigationSideBar(
+                items = NavigationList,
+                currentRoute = currentRoute,
+                onItemClick = { currentNavigationItem ->
+                    onItemClick(currentNavigationItem)
                 }
             )
         }
-    ) { paddingValues ->
-        MainNavGraph(
-            homeNavController = homeNavController,
-            rootNavController = rootNavController,
-            paddingValues = paddingValues
-        )
+        Scaffold(
+            bottomBar = {
+                AnimatedVisibility(
+                    visible = isBottomBarVisible,
+                    enter = slideInVertically(
+                        // Slide in from the bottom
+                        initialOffsetY = { fullHeight -> fullHeight }
+                    ),
+                    exit = slideOutVertically(
+                        // Slide out to the bottom
+                        targetOffsetY = { fullHeight -> fullHeight }
+                    )
+                ) {
+                    NewsBottomNavigation(
+                        items = NavigationList,
+                        currentRoute = currentRoute,
+                        onItemClick = { currentNavigationItem ->
+                            onItemClick(currentNavigationItem)
+                        }
+                    )
+                }
+            },
+            modifier = Modifier.systemBarsPadding()
+        ) { innerPadding ->
+            NavGraph(
+                rootNavController = rootNavController,
+                innerPadding = innerPadding,
+                settingViewModel = settingViewModel
+            )
+        }
     }
 }

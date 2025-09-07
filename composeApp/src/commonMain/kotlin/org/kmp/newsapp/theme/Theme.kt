@@ -5,6 +5,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import org.kmp.newsapp.util.Theme
 
 private val DarkColorScheme = darkColorScheme(
@@ -41,7 +45,11 @@ fun NewsAppTheme(
         }
 
         else -> {
-            if (darkTheme) DarkColorScheme else LightColorScheme
+            if (darkTheme) {
+                DarkColorScheme
+            } else {
+                LightColorScheme
+            }
         }
     }
 

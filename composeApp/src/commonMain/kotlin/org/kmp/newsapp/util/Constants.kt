@@ -17,8 +17,8 @@ import kmp_news_app.composeapp.generated.resources.system_default
 import org.jetbrains.compose.resources.StringResource
 import org.kmp.newsapp.data.model.Article
 import org.kmp.newsapp.data.model.Source
-import org.kmp.newsapp.navigation.BottomNavigationItem
-import org.kmp.newsapp.navigation.MainNavigation
+import org.kmp.newsapp.navigation.NavigationItem
+import org.kmp.newsapp.navigation.Route
 import kotlin.random.Random
 
 const val preferenceFileName="NewsApp.preferences_pb"
@@ -29,64 +29,21 @@ enum class Type{
     DESKTOP
 }
 
-val bottomBarList=listOf<BottomNavigationItem>(
-    BottomNavigationItem(
+val NavigationList=listOf<NavigationItem>(
+    NavigationItem(
         icon = Res.drawable.ic_home,
         title = Res.string.headlines,
-        route = MainNavigation.HeadLine.route
+        route = Route.Headline
     ),
-    BottomNavigationItem(
+    NavigationItem(
         icon = Res.drawable.ic_search,
         title = Res.string.search,
-        route = MainNavigation.Search.route
+        route = Route.Search
     ),
-    BottomNavigationItem(
+    NavigationItem(
         icon = Res.drawable.ic_bookmark,
         title = Res.string.bookmark,
-        route = MainNavigation.BookMark.route
-    )
-)
-
-val articles: List<Article> = listOf(
-    Article(
-        source = Source("dwa", "My news"),
-        author = "The author",
-        title = "This is the main news title headline. This is the main news title headline.",
-        description = "This is the main news description. This is the main news description. This is the main news description",
-        url = "https://thrivenews.co/gavin-newsoms-california-dream-decline-and-political-gamesmanship/",
-        urlToImage = "https://www.marketscreener.com/images/reuters/2024-03-05T144855Z_1_LYNXNPEK240IP_RTROPTP_3_GERMANY-TESLA-FIRE.JPG",
-        publishedAt = Random(100).nextInt().toString(),
-        content = "What is the content?"
-    ),
-    Article(
-        source = Source("dawdwa", "My news"),
-        author = "The author",
-        title = "This is the main news title headline. This is the main news title headline.",
-        description = "This is the main news description. This is the main news description. This is the main news description",
-        url = "https://thrivenews.co/gavin-newsoms-california-dream-decline-and-political-gamesmanship/",
-        urlToImage = "https://www.marketscreener.com/images/reuters/2024-03-05T144855Z_1_LYNXNPEK240IP_RTROPTP_3_GERMANY-TESLA-FIRE.JPG",
-        publishedAt = Random(100).nextInt().toString(),
-        content = "What is the content?"
-    ),
-    Article(
-        source = Source("dwakjyk", "My news"),
-        author = "The author",
-        title = "This is the main news title headline. This is the main news title headline.",
-        description = "This is the main news description. This is the main news description. This is the main news description",
-        url = "https://thrivenews.co/gavin-newsoms-california-dream-decline-and-political-gamesmanship/",
-        urlToImage = "https://www.marketscreener.com/images/reuters/2024-03-05T144855Z_1_LYNXNPEK240IP_RTROPTP_3_GERMANY-TESLA-FIRE.JPG",
-        publishedAt = Random(100).nextInt().toString(),
-        content = "What is the content?"
-    ),
-    Article(
-        source = Source("dwserfewa", "My news"),
-        author = "The author",
-        title = "This is the main news title headline. This is the main news title headline.",
-        description = "This is the main news description. This is the main news description. This is the main news description",
-        url = "https://thrivenews.co/gavin-newsoms-california-dream-decline-and-political-gamesmanship/",
-        urlToImage = "https://www.marketscreener.com/images/reuters/2024-03-05T144855Z_1_LYNXNPEK240IP_RTROPTP_3_GERMANY-TESLA-FIRE.JPG",
-        publishedAt = Random(100).nextInt().toString(),
-        content = "What is the content?"
+        route = Route.Bookmark
     )
 )
 

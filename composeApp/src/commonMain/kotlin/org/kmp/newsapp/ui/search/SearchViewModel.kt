@@ -12,10 +12,8 @@ import kotlinx.coroutines.launch
 import org.kmp.newsapp.data.model.Article
 import org.kmp.newsapp.data.model.ErrorResponse
 import org.kmp.newsapp.data.model.NewsResponse
-import org.kmp.newsapp.data.repository.LocalNewsRepository
 import org.kmp.newsapp.data.repository.NewsRepository
 import org.kmp.newsapp.util.Resource
-import org.kmp.newsapp.util.articles
 
 class SearchViewModel(
     private val newsRepository: NewsRepository

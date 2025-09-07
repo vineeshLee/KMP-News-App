@@ -10,7 +10,6 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import org.kmp.newsapp.data.model.Article
 import org.kmp.newsapp.data.repository.LocalNewsRepository
-import org.kmp.newsapp.ui.bookmark.BookMarkScreen
 
 class NewsDetailsViewModel(
     val localNewsRepository: LocalNewsRepository

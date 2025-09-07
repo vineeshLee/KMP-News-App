@@ -2,41 +2,59 @@
 
 package org.kmp.newsapp.ui.headline
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.FilterChip
-import androidx.compose.material3.FilterChipDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
-import kmp_news_app.composeapp.generated.resources.Res
-import kmp_news_app.composeapp.generated.resources.ic_document
-import kmp_news_app.composeapp.generated.resources.ic_no_internet
-import kmp_news_app.composeapp.generated.resources.no_news
+import kmp_news_app.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
+import org.kmp.newsapp.navigation.Route
 import org.kmp.newsapp.theme.xSmallPadding
 import org.kmp.newsapp.ui.common.ArticleListScreen
 import org.kmp.newsapp.ui.common.EmptyContent
 import org.kmp.newsapp.ui.common.ShimmerEffect
+import org.kmp.newsapp.util.NavigationList
 import org.kmp.newsapp.util.categoryList
 import org.koin.compose.viewmodel.koinViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HeadLineScreen(navController: NavController) {
+fun HeadLineScreen(rootNavController: NavController, paddingValues: PaddingValues) {
     val viewModel = koinViewModel<HeadLineViewModel>()
 
     val uiState by viewModel.newsState.collectAsState()
-    Column {
-
+    Column(
+        modifier = Modifier.fillMaxSize().padding(paddingValues)
+    ) {
+        TopAppBar(
+            title = {
+                Text(
+                    text = stringResource(NavigationList[0].title),
+                    style = MaterialTheme.typography.headlineLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+            },
+            actions = {
+                IconButton(onClick = {
+                    rootNavController.navigate(Route.SettingDetail)
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = stringResource(resource = Res.string.setting)
+                    )
+                }
+            }
+        )
         LazyRow(
             modifier = Modifier.fillMaxWidth(),
             contentPadding = PaddingValues(horizontal = xSmallPadding),
@@ -74,7 +92,7 @@ fun HeadLineScreen(navController: NavController) {
                         }
                     )
                 } else {
-                    ArticleListScreen(data, navController = navController)
+                    ArticleListScreen(data, navController = rootNavController)
                 }
             },
             onError = {

@@ -18,7 +18,6 @@ import org.kmp.newsapp.data.model.ErrorResponse
 import org.kmp.newsapp.data.model.NewsResponse
 import org.kmp.newsapp.data.repository.NewsRepository
 import org.kmp.newsapp.util.Resource
-import org.kmp.newsapp.util.articles
 import org.kmp.newsapp.util.categoryList
 
 class HeadLineViewModel(

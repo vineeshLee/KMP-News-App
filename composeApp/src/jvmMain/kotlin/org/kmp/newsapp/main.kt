@@ -18,7 +18,7 @@ fun main() = application {
             position = WindowPosition(Alignment.Center)
         )
     ) {
-        window.minimumSize= java.awt.Dimension(1280,768)
+        //window.minimumSize= java.awt.Dimension(1280,768)
         App()
     }
 }

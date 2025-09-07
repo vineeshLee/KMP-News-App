@@ -20,20 +20,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.font.FontWeight
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import kmp_news_app.composeapp.generated.resources.Res
 import kmp_news_app.composeapp.generated.resources.ic_web
 import kmp_news_app.composeapp.generated.resources.no_bookmarks
+import kmp_news_app.composeapp.generated.resources.setting
 import org.jetbrains.compose.resources.stringResource
-import org.kmp.newsapp.data.repository.LocalNewsRepository
-import org.kmp.newsapp.navigation.SettingRoute
+import org.kmp.newsapp.navigation.Route
 import org.kmp.newsapp.ui.common.ArticleListScreen
 import org.kmp.newsapp.ui.common.EmptyContent
 import org.kmp.newsapp.ui.common.ShimmerEffect
-import org.kmp.newsapp.util.bottomBarList
-import org.kmp.newsapp.util.getDatabaseBuilder
-import org.kmp.newsapp.util.getRoomDataBase
+import org.kmp.newsapp.util.NavigationList
 import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -53,6 +50,27 @@ fun BookMarkScreen(
             bottom = paddingValues.calculateBottomPadding(),
         ),
     ) {
+        TopAppBar(
+            title = {
+                Text(
+                    text = stringResource(NavigationList[2].title),
+                    style = MaterialTheme.typography.headlineLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+            },
+            actions = {
+                IconButton(onClick = {
+                    rootNavController.navigate(Route.SettingDetail)
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = stringResource(resource = Res.string.setting)
+                    )
+                }
+            }
+        )
+
         uiState.DisplayResult(onLoading = {
             ShimmerEffect()
         }, onSuccess = { articleList ->

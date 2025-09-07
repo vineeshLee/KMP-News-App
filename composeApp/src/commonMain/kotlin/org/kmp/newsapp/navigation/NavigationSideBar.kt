@@ -1,33 +1,30 @@
 package org.kmp.newsapp.navigation
 
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
+import org.kmp.newsapp.theme.smallPadding
 
 @Composable
-fun NewsBottomNavigation(
+fun NavigationSideBar(
     items: List<NavigationItem>,
     currentRoute: String?,
     onItemClick: (NavigationItem) -> Unit
 ) {
-    NavigationBar(
-        modifier = Modifier.fillMaxWidth(),
+    NavigationRail(
+        modifier = Modifier.fillMaxHeight(),
+        containerColor = MaterialTheme.colorScheme.surface,
     ) {
         items.forEach { navigationItem ->
             val isSelected = navigationItem.route::class.qualifiedName == currentRoute
 
-            NavigationBarItem(
-                selected = isSelected,
-                onClick = { onItemClick(navigationItem) },
+            NavigationRailItem(
+                modifier = Modifier.padding(vertical = smallPadding),
                 icon = {
                     Icon(
                         painter = painterResource(navigationItem.icon),
@@ -43,6 +40,8 @@ fun NewsBottomNavigation(
                         overflow = TextOverflow.Ellipsis
                     )
                 },
+                selected = isSelected,
+                onClick = { onItemClick(navigationItem) }
             )
         }
     }
